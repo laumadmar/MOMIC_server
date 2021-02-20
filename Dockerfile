@@ -32,9 +32,10 @@ RUN npm install -g configurable-http-proxy
 RUN python3 -m pip install notebook  
 
 # Install jupyterLab, git integration, jupyter extensions and extensions_configurator to be able to see the extensions in the notebook
-RUN python3 -m pip install --upgrade jupyterlab jupyterlab-git
+RUN python3 -m pip install --upgrade jupyterlab jupyterlab-git==0.30.0b2
 #RUN jupyter lab build
 RUN jupyter labextension install @jupyterlab/git
+#RUN python3 -m pip install "jupyterlab-git==0.30.0b2"
 
 RUN python3 -m pip install jupyter_contrib_nbextensions 
 RUN jupyter contrib nbextension install --system
@@ -69,10 +70,11 @@ COPY software /tmp
 
 # Installing R packages
 #RUN Rscript /tmp/restore_R_packages.R
-RUN R -e "BiocManager::install(c('BiocGenerics',Biobase','affy','gcrma','limma','hgu133plus2cdf','hgu133plus2.db','hgu133a.db','AnnotationDbi','DESeq2','biomaRt','lumi','GEOquery','preprocessCore','sva','edgeR'))"
+#RUN R -e "install.packages('BiocManager')"
+#RUN R -e "BiocManager::install(c('BiocGenerics','Biobase','affy','gcrma','limma','hgu133plus2cdf','hgu133plus2.db','hgu133a.db','AnnotationDbi','DESeq2','biomaRt','lumi','GEOquery','preprocessCore','sva','edgeR','impute'), update = TRUE, ask = FALSE)"
 
-RUN R -e "install.packages(c('RSQLite','ploty','qqman','gridExtra','grid','gplots','NMF','ggplot2','knitr','WebGestaltR','pheatmap','calibrate','GOplot','RobustRankAggreg'))"
-RUN R -e "library(remotes); remotes::install_github('metaOmics/MetaDE')"
+#RUN R -e "install.packages(c('RSQLite','ploty','qqman','gridExtra','grid','gplots','NMF','ggplot2','knitr','WebGestaltR','pheatmap','calibrate','GOplot','RobustRankAggreg'))"
+#RUN R -e "library(remotes); remotes::install_github('metaOmics/MetaDE')"
 
 # Installing Java
 RUN mkdir /usr/java && \
@@ -116,13 +118,10 @@ ADD jupyterhub_config.py /opt/jupyterhub/jupyterhub_config.py
 RUN mkdir -p /mnt/data
 
 # Add momic user
-#RUN useradd -u 1005 --create-home --shell /bin/bash momic
-RUN useradd -u 1005 -ms /bin/bash momic
+RUN useradd -u 1005 --create-home --shell /bin/bash momic
+#RUN useradd -u 1005 -ms /bin/bash momic
 RUN echo 'momic:m0m1c' | chpasswd
 RUN chown momic:momic /home/momic
-
-RUN useradd --shell /bin/bash admin
-RUN echo 'admin:4dm1n' | chpasswd
 
 # start jupyterhub as root
 USER root
