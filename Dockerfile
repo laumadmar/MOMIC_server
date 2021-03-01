@@ -35,15 +35,12 @@ RUN python3 -m pip install notebook
 RUN python3 -m pip install --upgrade jupyterlab jupyterlab-git==0.30.0b2
 #RUN jupyter lab build
 RUN jupyter labextension install @jupyterlab/git
-#RUN python3 -m pip install "jupyterlab-git==0.30.0b2"
+jupyter labextension install @jupyterlab/toc
 
 RUN python3 -m pip install jupyter_contrib_nbextensions 
 RUN jupyter contrib nbextension install --system
 
-#RUN python3 -m pip install jupyter_nbextensions_configurator
-#RUN jupyter nbextensions_configurator enable --system
 RUN jupyter nbextension enable execute_time/ExecuteTime 
-#execute_time/main
 RUN jupyter nbextension enable toc2/main
 RUN jupyter nbextension enable varInspector/main
 
@@ -51,13 +48,6 @@ RUN jupyter nbextension enable varInspector/main
 RUN apt-get install -y libzmq3-dev libcurl4-openssl-dev libssl-dev
 RUN R -e "install.packages(c('repr', 'IRdisplay', 'IRkernel'), type = 'source',repos='http://cran.rstudio.com/')"
 RUN R -e "IRkernel::installspec(user = FALSE)"
-
-# Install python3.6 and python3.6 kernel
-#RUN add-apt-repository ppa:deadsnakes/ppa
-#RUN apt-get update && apt-get install -y python3.6 python3.6-dev
-#RUN python3.6 -m pip install --upgrade pip
-#RUN python3.6 -m pip install ipykernel
-#RUN python3.6 -m ipykernel install --name=Python3.6
 
 # Install rpy2
 RUN apt-get install libffi-dev
@@ -95,7 +85,8 @@ chmod +x /usr/lib/magma/magma
 RUN tar -xvzf /tmp/Linux-metal.tar.gz -C /usr/lib
 
 # Install FASTQC and multiqc
-RUN apt-get install -y fastqc 
+RUN unzip -q fastqc_v0.11.9.zip -d /usr/lib/ && \
+chmod +x /usr/lib/FastQC/fastqc
 RUN python3.6 -m pip install multiqc 
 RUN export LANG=C.UTF-8
 RUN export LANG=C.UTF-8
@@ -105,8 +96,11 @@ RUN tar -xzf /tmp/2.7.7a.tar.gz -C /usr/lib
 # RUN cd /usr/lib/STAR-2.7.7a/source && \
 # RUN make STAR && cd
 
+# Install libpng12-0 needed for liftOver
+RUN dpkg -i /tmp/libpng12-0_1.2.54-1ubuntu1.1_amd64.deb
+
 # setting up path variable
-ENV PATH="/usr/lib/EIG-6.1.4/bin:/usr/java/jre1.8.0_121/bin:/usr/lib/plink1.9:/usr/lib/magma:/usr/lib/generic-metal:/usr/lib/STAR-2.7.7a/bin/Linux_x86_64:${PATH}"
+ENV PATH="/usr/lib/EIG-6.1.4/bin:/usr/java/jre1.8.0_121/bin:/usr/lib/plink1.9:/usr/lib/magma:/usr/lib/generic-metal:/usr/lib/FastQC/fastqc:/usr/lib/STAR-2.7.7a/bin/Linux_x86_64:${PATH}"
 
 # create directory where to keep jupyter config files
 RUN mkdir /opt/jupyterhub
@@ -119,7 +113,6 @@ RUN mkdir -p /mnt/data
 
 # Add momic user
 RUN useradd -u 1005 --create-home --shell /bin/bash momic
-#RUN useradd -u 1005 -ms /bin/bash momic
 RUN echo 'momic:m0m1c' | chpasswd
 RUN chown momic:momic /home/momic
 
