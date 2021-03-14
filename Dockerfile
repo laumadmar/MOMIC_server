@@ -35,7 +35,7 @@ RUN python3 -m pip install notebook
 RUN python3 -m pip install --upgrade jupyterlab jupyterlab-git==0.30.0b2
 #RUN jupyter lab build
 RUN jupyter labextension install @jupyterlab/git
-jupyter labextension install @jupyterlab/toc
+RUN jupyter labextension install @jupyterlab/toc
 
 RUN python3 -m pip install jupyter_contrib_nbextensions 
 RUN jupyter contrib nbextension install --system
@@ -61,7 +61,7 @@ COPY software /tmp
 # Installing R packages
 #RUN Rscript /tmp/restore_R_packages.R
 #RUN R -e "install.packages('BiocManager')"
-#RUN R -e "BiocManager::install(c('BiocGenerics','Biobase','affy','gcrma','limma','hgu133plus2cdf','hgu133plus2.db','hgu133a.db','AnnotationDbi','DESeq2','biomaRt','lumi','GEOquery','preprocessCore','sva','edgeR','impute'), update = TRUE, ask = FALSE)"
+#RUN R -e "BiocManager::install(c('BiocGenerics','Biobase','affy','gcrma','limma','hgu133plus2cdf','hgu133plus2.db','hgu133a.db','AnnotationDbi','DESeq2','biomaRt','lumi','GEOquery','preprocessCore','sva','edgeR','impute','DEqMS'), update = TRUE, ask = FALSE)"
 
 #RUN R -e "install.packages(c('RSQLite','ploty','qqman','gridExtra','grid','gplots','NMF','ggplot2','knitr','WebGestaltR','pheatmap','calibrate','GOplot','RobustRankAggreg'))"
 #RUN R -e "library(remotes); remotes::install_github('metaOmics/MetaDE')"
@@ -88,8 +88,6 @@ RUN tar -xvzf /tmp/Linux-metal.tar.gz -C /usr/lib
 RUN unzip -q fastqc_v0.11.9.zip -d /usr/lib/ && \
 chmod +x /usr/lib/FastQC/fastqc
 RUN python3.6 -m pip install multiqc 
-RUN export LANG=C.UTF-8
-RUN export LANG=C.UTF-8
 
 # Install STAR aligner
 RUN tar -xzf /tmp/2.7.7a.tar.gz -C /usr/lib

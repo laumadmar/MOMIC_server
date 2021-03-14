@@ -1,5 +1,5 @@
 install.packages('BiocManager')
-BiocManager::install(c('impute','BiocGenerics','Biobase','affy','gcrma','limma','hgu133plus2cdf','hgu133plus2.db','hgu133a.db','AnnotationDbi','DESeq2','biomaRt','lumi','GEOquery','preprocessCore','sva','edgeR'))
+BiocManager::install(c('impute','BiocGenerics','Biobase','affy','gcrma','limma','hgu133plus2cdf','hgu133plus2.db','hgu133a.db','AnnotationDbi','DESeq2','biomaRt','lumi','GEOquery','preprocessCore','sva','edgeR','DEqMS'))
 install.packages(c('RSQLite','ploty','qqman','gridExtra','grid','gplots','NMF','ggplot2','knitr','WebGestaltR','pheatmap','calibrate','GOplot','RobustRankAggreg','remotes'))
 library(remotes)
 remotes::install_github("metaOmics/MetaDE")
