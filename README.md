@@ -1,8 +1,10 @@
 ## MOMIC: A Multi-Omics Pipeline for data analysis, integration and interpretation
 
-The proposed pipeline, written mainly in R language is a set of Jupyter templates created to analyse and combine different types of omic data and follows step-by-step protocols designed for each type. The protocols are based on accepted articles and best practices available in the literature.
+MOMIC offers a complete analysis environment for analysing and integrating multi-omics data in a single, easy-to-use platform.
 
-It is distributed as a docker project that can be locally installed. The provided docker-compose file contains the instructions needed to automatically create a fully working machine with JupyterHub, the pipeline source code and all the necessary libraries and third parties software.
+MOMIC currently compiles protocols for whole genome SNP data (GWAS), mRNA expression (both from arrays and from RNAseq experiments) and protein data. The proposed protocols are developed as Jupyter notebooks that guide the user through the tasks of pre-processing and transforming the data and performing the actual analysis, allowing the user to modify any piece of code needed along the process to adequate it to each project.
+
+It is distributed as a docker project and a collection of Jupyter notebooks. The docker-compose file provided in this repository contains the instructions needed to automatically create a fully working machine with JupyterHub, the pipeline source code and all the necessary libraries and third parties software. Once you have your local MOMIC server up and running, get the notebooks following the instrucctions on [this repo](https://github.com/laumadmar/MOMIC_notebooks.git) or check out the [user manual](https://laumadmar.github.io/MOMIC_server).
 
 ### Instalation 
 
