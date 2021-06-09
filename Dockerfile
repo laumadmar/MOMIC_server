@@ -1,7 +1,5 @@
 FROM ubuntu:18.04
 
-ENV HTTP_PROXY "http://192.168.20.101:3128"
-ENV HTTPS_PROXY "http://192.168.20.101:3128"
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Updating Ubuntu packages
@@ -85,7 +83,7 @@ chmod +x /usr/lib/magma/magma
 RUN tar -xvzf /tmp/Linux-metal.tar.gz -C /usr/lib
 
 # Install FASTQC and multiqc
-RUN unzip -q fastqc_v0.11.9.zip -d /usr/lib/ && \
+RUN unzip -q /tmp/fastqc_v0.11.9.zip -d /usr/lib/ && \
 chmod +x /usr/lib/FastQC/fastqc
 RUN python3.6 -m pip install multiqc 
 
