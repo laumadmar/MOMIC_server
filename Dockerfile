@@ -1,5 +1,7 @@
 FROM ubuntu:18.04
 
+ENV HTTP_PROXY "http://192.168.20.101:3128"
+ENV HTTPS_PROXY "http://192.168.20.101:3128"
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Updating Ubuntu packages

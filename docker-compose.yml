@@ -4,11 +4,12 @@ services:
   web:
     build: 
         context: .
-        #network: host # needed if running behind a proxy
+        network: host
     restart: unless-stopped
+    # network mode host is needed if running behind a proxy. This way, the container does not get its own IP address, so port forwarding is not needed
     ports:
             - "8002:8000"
     volumes:
       - ./../jupyterhomevolume:/home
-      - ./jupyterhub_config.py:/opt/jupyterhub/jupyterhub_config.py # add this file as a volume so you can edit it without having to re-build
+      - ./jupyterhub_config.py:/opt/jupyterhub/jupyterhub_config.py # add this file as volume so you can edit it without having to re-build
       - ./../datavolume:/mnt/data

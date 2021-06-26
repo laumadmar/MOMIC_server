@@ -1,5 +1,15 @@
 # Configuration file for jupyterhub.
 
+# 
+# Opciones de proxy http para el entorno de hosting
+# de investigacion del SIC
+#
+import os
+os.environ['http_proxy'] = "http://192.168.20.101:3128" 
+os.environ['https_proxy'] = "http://192.168.20.101:3128" 
+os.environ['HTTP_PROXY'] = "http://192.168.20.101:3128"        
+os.environ['HTTPS_PROXY'] = "http://192.168.20.101:3128"
+
 #------------------------------------------------------------------------------
 # Application(SingletonConfigurable) configuration
 #------------------------------------------------------------------------------
