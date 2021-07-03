@@ -3,18 +3,17 @@
 ## Table of contents
 1. [Introduction](#introduction)
 2. [Installation](#installation)
-3. [Jupyter general instructions](#jupyter-general-instructions)
+3. [Jupyter general instructions](#jupyter-general-instrucctions)
 4. [Analysis Pipelines](#analysis-pipelines)
-    1. [Transcriptomics. Genome Wide Expression Studies (GWES) from Microarray](#transcriptomics.-genome-wide-expression-studies-(gwes)-from-microarray)
-    2. [Transcriptomics. Genome Wide Expression Studies (GWES) from RNASeq](#transcriptomics.-genome-wide-expression-studies-(gwes)-from-rnaseq)
-    3. [Genome Wide Association Analysis (GWAS)](#genome-wide-association-analysis-(gwas))
-    4. [Expression Proteomics](#prot)
+    1. [Transcriptomics. Genome Wide Expression Studies (GWES) from Microarray](#transcriptomics-genome-wide-expression-studies-gwes-from-microarray)
+    2. [Transcriptomics. Genome Wide Expression Studies (GWES) from RNASeq](#transcriptomics-genome-wide-expression-studies-gwes-from-rnaseq)
+    3. [Genome Wide Association Analysis (GWAS)](#genome-wide-association-analysis-gwas)
+    4. [Expression Proteomics](#expression-proteomics)
     5. [Meta Analysis](#meta)
-        1. [Meta GWES](#meta-gwes)
-        2. [Meta GWAS](#meta-gwas)
+        1. [Meta-Analysis of gene expression data](#meta-analysis-of-gene-expression-data)
+        2. [Meta-Analysis of GWAS data](#meta-analysis-of-gwas-data)
     6. [Integrative Analysis](#integrative-analysis)
     7. [Enrichment](#enrichment)
-5. [References](#references)
 
 ## Introduction
 
@@ -28,147 +27,46 @@ The data analysis workflows starts with the pre-processing and quality control o
 ![main workflow](figures/general_types2.png)
 
 
-MOMIC is presented as a collection of Jupyter notebooks using JupyterHub with JupyterLab deployed, written mainly in R language and containerized in Docker. It is distributed as a docker-compose project that contains the instructions needed to automatically create a fully working machine with JupyterHub, convenient extensions enabled, like git and table of content, docker volumes for data persistence, the pipeline source code and all the necessary libraries and third-party software. An alternative to a local installation is to use the pipeline hosted at [momic.us.es](momic.us.es). Note this alternative is intended for light analysis or quick testing. 
+MOMIC is presented as a collection of Jupyter notebooks using JupyterHub with JupyterLab deployed, written mainly in R language and containerized in Docker. 
+
+## Access
+
+The web tool can be accessed at [momic.us.es](momic.us.es). The default user is `momic`and password is `m0m1c`. Request new credentials in `lmadrid@caebi.es`. Note this alternative is intended for light analysis or quick testing. 
+
+The recomendation is to install MOMIC locally. For this purpose, it is distributed as a docker-compose project that contains the instructions needed to automatically create a fully working machine with JupyterHub, convenient extensions enabled, like git and table of content, docker volumes for data persistence, the pipeline source code and all the necessary libraries and third-party software. Having MOMIC locally built allows you to install new tools and libraries and fully customised this bioinformatics suit.
+
+The data used for illustration purposes can be found at https://momic.us.es/momic_data/, except for IGAP and BLSA. The user is `momic`and password is `m0m1c`.
 
 ## Installation
+<div style="text-align: right"> <a href="#introduction">top</a> </div>
 
 The only requisite to install MOMIC locally is to have Docker and docker-compose already installed. Docker is a platform used to develop, deploy, and run applications with containers. Follow the instructions on each project website ([docker](https://docs.docker.com/install) and [docker-compose](https://docs.docker.com/compose/install)).
 
-There are two git repositories you need to clone to replicate the project. One containing the docker instructions to build the service, called MOMIC_server, and another one containing the jupyter notebooks, called MOMIC_notebooks (**TODO** if using momic image this repo is not needed. This paragraph can be removed). 
+The minimun RAM memory recommended is 56GB. It may need to be increased with large datasets, specially for some process during a RNASeq Analysis or an imputation of GWAS data. Disk space can vary depending on the size of your data; 260GB is the actual size of the data volume of momic.us.es. MOMIC has been tested on Ubuntu, CentOS, Windows and macOS servers.
 
-**TODO** minimun requirements (RAM and disk)
-
-### For the impatients:
+Follow the next steps to quickly get MOMIC up and running locally:
 
 - clone MOMIC_server in your local directory via `git clone https://github.com/laumadmar/MOMIC_server.git` 
-- cd into that dir
-- run `docker pull momic:latest` to download the docker image. You can ensure that the image is installed by using `docker images` (**No esta publicada, hasta entonces, desde el directorio donde tengamos la imagen guardada, hacemos docker load < momic_server_notebooks_image.tar.gz**)
+- cd into that directory
+- run `docker pull laumadmar/momic:latest` to download the docker image. You can ensure that the image is installed by using `docker images`
 - run `docker-compose up` and once the server is up, press `CTRL+c` to stop the console output
 - run `docker-compose start` to keep the service running in the background
-- access the tool at http://localhost:8000/jupyter and log in with user momic, pass m0m1c
+- access the tool at http://localhost:8000/jupyter and log in with user momic, pass m0m1c 
 
-An alternative is to create your container from the original instructions, which can be fully customised. Rename the file `Dockerfile.steps` to `Dockerfile` (**TODO** create Dockerfile.image and Dockerfile, the default will be the image)
+An alternative is to create your container from the original instructions, which can be fully customised. After clonning MOMIC_server repository, rename the file `Dockerfile.steps` to `Dockerfile`. (**TODO** create Dockerfile.image and Dockerfile, the default will be the image)
 - run `docker pull ubuntu:18.04` to download the ubuntu docker image
 - run `docker-compose up` and once the server is up, press `CTRL+c` to stop the console output
 - run `docker-compose start` to keep the service running in the background
 - ssh into the container executing the access script (`./access`) and type `nohup Rscript /tmp/install_specific_libraries.R &` to install the required R packages
-- access the tool at http://localhost:8000/jupyter and log in with user momic, pass m0m1c
+- access the tool at http://localhost:8000/jupyter and log in
 - clone MOMIC Notebooks repo from jupyter or from the terminal after ssh into the container. For the former, go to the git tab located in the left menu, click on the button ‘Clone a Repository’ and provide the repo url. For the latter, ssh into the container, cd into momic home directory and type  `git clone https://github.com/laumadmar/MOMIC_notebooks.git`
 
-If you run into any issues it is likely that the port 8000 is already in used or you need to configure any of the other parameters. Follow the step by step instrucctions in this case.
+It is strongly recommended to inspect the [step by step guide](#installation_steps.html) to get a detailed explanation of this process, how MOMIC_server can be fully customised and access to some useful scripts and commands.
 
-
-
-### For a step by step installation follow the next 3 major steps: / for the developers / move this to another page - remove from here - just keep the link.
-
-
-#### 1. Get MOMIC server and go over the configuration
-
-##### 1.1. Clone the repo
-
-First, clone MOMIC_server in your local directory via `git clone https://github.com/laumadmar/MOMIC_server.git` and inspect the content:
-
-- docker-compose.yml: YAML file defining services, networks and volumes
-
-- Dockerfile: text document that contains the instructions to build the service
-
-- jupyterhub_config.py: configuration file for JupyterHub
-
-- README.md: readme file with instructions on how to deploy the multiomics pipeline
-
-- software: directory containing third-party software
-
-
-##### 1.2. Customise parameters
-
-Modify if required the following parameters in docker-compose and/or Jupyter configuration file:
-
-- docker-compose.yml:
-
-```json
-    ports:
-        - "8000:8000"
-    volumes:
-        -./jupyterhub_config.py:/home/jupyterconfig/jupyterhub_config.py
-        - jupyterdata:/mnt/data
-        - home:/home
-```
-
-
-Container port 8000 is exposed in your local machine at port 8000, specified as “host port: container port”. Change it if this port is in used in your local machine.
-
-Volumes are a mechanism for persisting data generated by and used by Docker containers. Three volumes are suggested here for:
-
-    - jupyterhub config file – so there is no need to rebuild if you change this file
-    
-    - the directory where to keep the data to be analysed
-
-    - jupyter home directory. This will contain the notebooks
-
-Syntax for defining volumes is host_machine/absolute/path/to/dir:container/path/to/dir.
-
-In order to have the same permissions in the data directory on host machine and the directory mounted as a volume in the docker container, it is advisable to create users in the container with the same name and uid as in the host machine. You can create users in the container using the Dockerfile or once the container is up and running; ssh in and create a linux user as usual.
-
-- jupyterhub_config.py: The default parameters you can change if needed is: `c.JupyterHub.bind_url = 'http://8000/jupyter'` which sets the protocol, ip and base url on which the proxy will bind. By default, the JupyterLab view is loaded as indicated with the parameter: `c.Spawner.default_url = '/lab'`. Comment this line to launch the Classic Notebook. Note you can change from one to another later on.
-
-#### 2. Build the service with compose
-
-Follow these steps to build and run locally the multiomics pipeline with Docker Compose. Notice you need sudo privileges or a special group for running docker commands; read more on the Docker web site. 
-
-1. From your project directory, start the server by running `docker-compose up`. Compose builds an image from the instructions specified in the Dockerfile, and starts the services defined.
-
-2. Enter `http://localhost:8000/jupyter` in a browser to see the application running. Modify this url accordingly if you have changed the port and base url in docker-compose.yml.
-
-3. Once the server is up, press `CTRL+c` to stop the console output. This will also stop the container.
-
-4. Run `docker-compose start` to keep the service started in the background.
-
-5. Note the RUN directive that installs R libraries within the Dockerfile. This takes very long to execute and it is commented out. As an alternative, install them after the build, accessing the container from the terminal and executing `nohup Rscript /tmp/install_specific_libraries.R &`
-
-##### Access and log
-
-There are two bash files on this repo for quickly accessing the container via terminal and checking the logs.
-
-The access files contains: `docker exec -it jupyter_config_web_1 bash`
-
-The logs file contains: `docker logs jupyter_config_web_1`
-
-Change jupyter_config_web_1 by the name of your service. You can get if from `sudo docker-compose ps`.
-
-##### Notes
-
-If you modify at some point the Dockerfile, you need you build the image – follow:
-
-`docker-compose stop`
-
-`docker-compose build`
-
-`docker-compose up`
-
-
-First time you fire up the container and log in it can take a bit longer. It will show a message saying: “Your server is starting up. You will be redirected automatically when it's ready for you.” Refresh after a while if the home page does not come up.
-
-Note you need sudo privileges or create a special group; read more on Docker web site. Few useful docker commands:
-
-- `docker-compose stop` to stop the running container
-
-- `docker-compose ps` to check the status
-
-- `docker inspect --format='{{.LogPath}}' momic_server_web_1` to get the path to the log file
-
-- `docker logs momic_server_web _1` to print the log in console
-
-- `docker exec –it momic_server_web _1 bash` to access the running container.
-
-#### 3. Get MOMIC Notebooks
-
-Log into MOMIC Jupyterhub and go to the git tab located in the left menu. Click on the button ‘Clone a Repository’ and provide the url https://github.com/laumadmar/MOMIC_notebooks.git
-
-An alternative to use the gitlab extension is to clone the repository from the terminal, either using Jupyter terminal or via ssh into the container. CD into your jupyter home directory and type `git clone https://github.com/laumadmar/MOMIC_notebooks.git`.
-
-You now have in your home directory a copy of all the notebooks necessary to carry out the analysis presented in MOMIC.
+If you run into any issues it is likely that the port 8000 is already in used in your host machine or you need to configure any parameters specified in the `docker-compose.yml` file. Follow the step by step instrucctions in this case.
 
 ## Jupyter general instrucctions
+<div style="text-align: right"> <a href="#introduction">top</a> </div>
 
 The Jupyter Notebook is an open-source web application that allows you to create and share documents that contain live code, equations, visualizations and narrative text. JupyterHub brings the power of notebooks to groups of users.
 
@@ -176,14 +74,14 @@ You will find all the notebooks needed to complete the different analysis in you
 
 Notebooks are provided as read-only, we call them templates. To create your own notebook from a template, select the desired template and click on the Duplicate button. Select the new notebook and right-click to see the Rename button. An alternative if using the classic theme is to click on the name of the new notebook to open it and change the name once opened.
 
-It is possible to create a fresh empty notebook in whichever directory you want from the plus button located at the top left menu (or New button if using the classic notebook). If you want to replicate an analysis, follow the same steps indicated in the corresponding template. Note that a cell can have different types, we are working here with markdown and code cells. Thi can be changed in the top menu.
+It is possible to create a fresh empty notebook in whichever directory you want from the plus button located at the top left menu (or 'New' button if using the classic notebook). If you want to replicate an analysis, follow the same steps indicated in the corresponding template. Note that a cell can have different types, we are working here with markdown and code cells. Thi can be changed in the top menu. In the same way, you can create a new text or markdown file and open a terminal window. Note you can use the two subsequent icons to create a new folder or upload a new file. This is the manner in which you can upload your own data to MOMIC webserver.
 
-In the same way, you can create a new folder, a text file and open a terminal window.
+To execute a cell, press `CTRL+ENTER` or click on the Run button located in the top menu. Alternatively, `CTRL+ALT` to create a new empty code cell bellow it. 
 
-To execute a cell, press `CTRL+ENTER` or click on the Run button located in the top menu. Alternatively, `CTRL+ALT` to create a new empty code cell bellow it. Inspect the menu to go through all Jupyter features or visit the Jupyter Project Documentation website to know more (https://jupyter-notebook.readthedocs.io/en/stable/ and https://jupyterlab.readthedocs.io/en/stable/)
+Inspect the menus to go through all Jupyter features or visit the Jupyter Project Documentation website to know more (https://jupyter-notebook.readthedocs.io/en/stable/ and https://jupyterlab.readthedocs.io/en/stable/)
 
 ## Analysis pipelines
-
+<div style="text-align: right"> <a href="#introduction">top</a> </div>
 
 Notebooks are provided as read-only and we refer to these as templates. As explained in the previous [section](#jupyter-general-instrucctions), create your own notebook, a duplicate or an empty one, and modify paths and/or code according to your needs. Execute code in cells with CTRL+ENTER or clicking on the Run button located at the top menu. Alternatively, CTRL+ALT to create a new empty code cell below it.
 
@@ -192,6 +90,7 @@ Read carefully the comments on the Jupyter templates as they explain in detail t
 In order to modify a core pipeline function, duplicate the original script, rename it, do the desired changes and save it. Note that the cell that imports these functions in your template, the one that contains this code `source("scripts/whatever.R")`, has to be run after the changes.
 
 ### Transcriptomics. Genome Wide Expression Studies (GWES) from Microarray
+<div style="text-align: right"> <a href="#introduction">top</a> </div>
 
 RNA microarrays, are tools that allow the identification and quantification of the mRNA transcripts present in the cells. RNA microarrays can simultaneously measure the expression level of thousands of genes within a particular mRNA sample. Such high-throughput expression profiling can be used to compare the level of gene transcription in clinical or biological conditions in order to find differences in expression levels between predefined groups of samples. This is called differential expression (DE) analysis.
 
@@ -214,6 +113,7 @@ Regarding gene annotation, if there is more than one gene matching the same prob
 To illustrate this analysis, datasets GSE48350 and GSE15222, from the Gene Expression Omnibus (GEO) database have been used.
 
 ### Transcriptomics. Genome Wide Expression Studies (GWES) from RNASeq
+<div style="text-align: right"> <a href="#introduction">top</a> </div>
 
 RNA-Seq is a particular technology-based sequencing technique which uses next generation sequencing (NGS) to reveal the presence and quantity of RNA in a biological sample at a given moment. Gene expression is quantified by counting the number of reads that mapped to each locus in the transcriptome assembly step.
 
@@ -232,6 +132,7 @@ Last step is DE analysis, done with DESeq2, to find differences in expression le
 To illustrate this analysis synthetic data have been generated.
 
 ### Genome Wide Association Analysis (GWAS)
+<div style="text-align: right"> <a href="#introduction">top</a> </div>
 
 Genome Wide Association Studies are hypothesis free methods to identify associations between genetic regions (loci) and traits (including diseases). It has long been known that genetic variation between individuals can cause differences in phenotypes. These causal variants, and those which are tightly linked to their region of the chromosome, are therefore present at higher frequency in cases (individuals with the trait) than controls (individuals without the trait).
 
@@ -259,9 +160,10 @@ The two main protocols followed in this pipeline are: Anderson, et. al. Data qua
 
 ![GWAS protocol](figures/GWASProtocol.png)
 
-The data used to illustrate this analysis is taken from the 1000 Genomes Project. We have slightly modified this dataset updating the identifiers to rsID, removing SNPs with minor allele frequency and adding fake case/control phenotypes. **We have also purposely duplicated one individual to check that the algorithm detects it.**
+The data used to illustrate this analysis is taken from the 1000 Genomes Project. We have slightly modified this dataset updating the identifiers to rsID, removing SNPs with minor allele frequency < 0.01 and prunning the number of SNPs in order to reduce the computation time.
 
 ### Proteomics
+<div style="text-align: right"> <a href="#introduction">top</a> </div>
 
 Expression Proteomics pipeline involves includes the analysis of differentially expressed proteins between conditions, such as diseased vs. healthy tissue.
 
@@ -280,6 +182,7 @@ For the differential analysis, we use DEqMS R package. DEqMS builds on top of li
 Proteomics data from postmortem brain tissue have been collected from The National Institute on Aging’s Baltimore Longitudinal Study of Aging (BLSA) (Synapse 10.7303/syn3606086).
 
 ### Meta-Analysis
+<div style="text-align: right"> <a href="#introduction">top</a> </div>
 
 Meta-analysis is the statistical procedure for synthesising data across studies. It can be performed when there are multiple studies addressing the same question and the same molecular level. This analysis is to be conducted after the individual analysis have been completed. Two different protocols are provided here, one for combining multiple GWAS results and another for transcriptomics and proteomics results.
 
@@ -301,7 +204,10 @@ The analysis is peformed using METAL, which allows two analyses scehemes: SAMPLE
 
 The template for this meta-analysis can be found in MetaAnalysis/GWAS under MOMIC_notebooks within the home directory. The template is provided as read-only. As explained in [section 3](#jupyter-general-instrucctions), create your own notebook (a duplicate or an empty one) and modify paths and/or code according to your needs.
 
+For illustration purposes, a meta-analysis have been conducted with datat from (IGAP) and the results of the GWAS analysis performed following [section 4.C](#genome-wide-association-analysis-(gwas)).
+
 ## Integrative analysis
+<div style="text-align: right"> <a href="#introduction">top</a> </div>
 
 Integrative Analysis aims to consolidate heterogeneous data at different omics levels to understand their interrelation and combined influence on the disease processes.
 
@@ -316,6 +222,7 @@ Since the number of informative ranks is not known, RRA defines the final score 
 The template for this analysis can be found in the folder IntegrativeAnalysis under the home directory. It combines the results from the meta-analysis of microarray expression data obtained following [section 4.A GWES](#transcriptomics.-genome-wide-expression-studies-(gwes)-from-microarray), with the GWAS analysis results obtained following [section 4.C GWAS](#genome-wide-association-analysis-(gwas)). 
 
 ## Enrichment analysis
+<div style="text-align: right"> <a href="#introduction">top</a> </div>
 
 Enrichment analysis, or pathway analysis, can identify terms which are statistically over or under-represented within the list of interest, by systematically mapping genes and proteins to their associated biological annotations, such as gene ontology GO terms or pathway membership, and then comparing the distribution of the terms within a gene set of interest with the background distribution of these terms (e.g., all genes represented on a microarray chip).
 
@@ -332,3 +239,5 @@ Various templates can be found in the folder Enrichment under the home directory
 - pheatmap_template.ipynb: this template uses the R library pheatmap to represent combined results from meta expression, meta GWAS, integrative analysis and enrichment of meta expression, completed following the different analysis available in this pipeline.
 
 Templates are provided as read-only. As explained in [section 3](#jupyter-general-instrucctions), create your own notebook (a duplicate or an empty one) and modify paths and/or code according to your needs. Execute code in cells with `CTRL+ENTER` or doing click on the Run button located at the top menu. Alternatively, `CTRL+ALT` to create a new empty code cell bellow it.
+
+
