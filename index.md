@@ -31,7 +31,7 @@ MOMIC is presented as a collection of Jupyter notebooks using JupyterHub with Ju
 
 ## Access
 
-The web tool can be accessed at [momic.us.es](momic.us.es). The default user is `momic`and password is `m0m1c`. Request new credentials in `lmadrid@caebi.es`. Note this alternative is intended for light analysis or quick testing. 
+The web tool can be accessed at [momic.us.es](momic.us.es). The default user is `momic`and password is `m0m1c`. Request new credentials to `lmadrid@caebi.es`. Note this alternative is intended for light analysis or quick testing. 
 
 The recomendation is to install MOMIC locally. For this purpose, it is distributed as a docker-compose project that contains the instructions needed to automatically create a fully working machine with JupyterHub, convenient extensions enabled, like git and table of content, docker volumes for data persistence, the pipeline source code and all the necessary libraries and third-party software. Having MOMIC locally built allows you to install new tools and libraries and fully customised this bioinformatics suit.
 
@@ -46,14 +46,14 @@ The minimun RAM memory recommended is 56GB. It may need to be increased with lar
 
 Follow the next steps to quickly get MOMIC up and running locally:
 
-- clone MOMIC_server in your local directory via `git clone https://github.com/laumadmar/MOMIC_server.git` 
+- clone MOMIC_server in your local directory via `git clone https://github.com/laumadmar/MOMIC_server.git` and inspect the content
 - cd into that directory
-- run `docker pull laumadmar/momic:latest` to download the docker image. You can ensure that the image is installed by using `docker images`
+- run `docker pull laumadmarq/momic:latest` to download the docker image. You can ensure that the image is installed by using `docker images`
 - run `docker-compose up` and once the server is up, press `CTRL+c` to stop the console output
 - run `docker-compose start` to keep the service running in the background
 - access the tool at http://localhost:8000/jupyter and log in with user momic, pass m0m1c 
 
-An alternative is to create your container from the original instructions, which can be fully customised. After clonning MOMIC_server repository, rename the file `Dockerfile.steps` to `Dockerfile`. (**TODO** create Dockerfile.image and Dockerfile, the default will be the image)
+An alternative is to create your container from the original instructions, which can be fully customised. After clonning MOMIC_server from the repository, rename the file `Dockerfile.steps` to `Dockerfile`. 
 - run `docker pull ubuntu:18.04` to download the ubuntu docker image
 - run `docker-compose up` and once the server is up, press `CTRL+c` to stop the console output
 - run `docker-compose start` to keep the service running in the background
