@@ -8,8 +8,8 @@
     1. [Transcriptomics. Genome Wide Expression Studies (GWES) from Microarray](#transcriptomics-genome-wide-expression-studies-gwes-from-microarray)
     2. [Transcriptomics. Genome Wide Expression Studies (GWES) from RNASeq](#transcriptomics-genome-wide-expression-studies-gwes-from-rnaseq)
     3. [Genome Wide Association Analysis (GWAS)](#genome-wide-association-analysis-gwas)
-    4. [Expression Proteomics](#expression-proteomics)
-    5. [Meta Analysis](#meta)
+    4. [Proteomics](#proteomics)
+    5. [Meta Analysis](#meta-analysis)
         1. [Meta-Analysis of gene expression data](#meta-analysis-of-gene-expression-data)
         2. [Meta-Analysis of GWAS data](#meta-analysis-of-gwas-data)
     6. [Integrative Analysis](#integrative-analysis)
@@ -38,7 +38,7 @@ The recomendation is to install MOMIC locally. For this purpose, it is distribut
 The data used for illustration purposes can be found at https://momic.us.es/momic_data/, except for IGAP and BLSA. The user is `momic`and password is `m0m1c`.
 
 ## Installation
-<div style="text-align: right"> <a href="#introduction">top</a> </div>
+<div style="text-align: right"> <a href="#table-of-contents">top</a> </div>
 
 The only requisite to install MOMIC locally is to have Docker and docker-compose already installed. Docker is a platform used to develop, deploy, and run applications with containers. Follow the instructions on each project website ([docker](https://docs.docker.com/install) and [docker-compose](https://docs.docker.com/compose/install)).
 
@@ -66,7 +66,7 @@ It is strongly recommended to inspect the [step by step guide](#installation_ste
 If you run into any issues it is likely that the port 8000 is already in used in your host machine or you need to configure any parameters specified in the `docker-compose.yml` file. Follow the step by step instrucctions in this case.
 
 ## Jupyter general instrucctions
-<div style="text-align: right"> <a href="#introduction">top</a> </div>
+<div style="text-align: right"> <a href="#table-of-contents">top</a> </div>
 
 The Jupyter Notebook is an open-source web application that allows you to create and share documents that contain live code, equations, visualizations and narrative text. JupyterHub brings the power of notebooks to groups of users.
 
@@ -81,7 +81,7 @@ To execute a cell, press `CTRL+ENTER` or click on the Run button located in the 
 Inspect the menus to go through all Jupyter features or visit the Jupyter Project Documentation website to know more (https://jupyter-notebook.readthedocs.io/en/stable/ and https://jupyterlab.readthedocs.io/en/stable/)
 
 ## Analysis pipelines
-<div style="text-align: right"> <a href="#introduction">top</a> </div>
+<div style="text-align: right"> <a href="#table-of-contents">top</a> </div>
 
 Notebooks are provided as read-only and we refer to these as templates. As explained in the previous [section](#jupyter-general-instrucctions), create your own notebook, a duplicate or an empty one, and modify paths and/or code according to your needs. Execute code in cells with CTRL+ENTER or clicking on the Run button located at the top menu. Alternatively, CTRL+ALT to create a new empty code cell below it.
 
@@ -90,7 +90,7 @@ Read carefully the comments on the Jupyter templates as they explain in detail t
 In order to modify a core pipeline function, duplicate the original script, rename it, do the desired changes and save it. Note that the cell that imports these functions in your template, the one that contains this code `source("scripts/whatever.R")`, has to be run after the changes.
 
 ### Transcriptomics. Genome Wide Expression Studies (GWES) from Microarray
-<div style="text-align: right"> <a href="#introduction">top</a> </div>
+<div style="text-align: right"> <a href="#table-of-contents">top</a> </div>
 
 RNA microarrays, are tools that allow the identification and quantification of the mRNA transcripts present in the cells. RNA microarrays can simultaneously measure the expression level of thousands of genes within a particular mRNA sample. Such high-throughput expression profiling can be used to compare the level of gene transcription in clinical or biological conditions in order to find differences in expression levels between predefined groups of samples. This is called differential expression (DE) analysis.
 
@@ -113,7 +113,7 @@ Regarding gene annotation, if there is more than one gene matching the same prob
 To illustrate this analysis, datasets GSE48350 and GSE15222, from the Gene Expression Omnibus (GEO) database have been used.
 
 ### Transcriptomics. Genome Wide Expression Studies (GWES) from RNASeq
-<div style="text-align: right"> <a href="#introduction">top</a> </div>
+<div style="text-align: right"> <a href="#table-of-contents">top</a> </div>
 
 RNA-Seq is a particular technology-based sequencing technique which uses next generation sequencing (NGS) to reveal the presence and quantity of RNA in a biological sample at a given moment. Gene expression is quantified by counting the number of reads that mapped to each locus in the transcriptome assembly step.
 
@@ -132,7 +132,7 @@ Last step is DE analysis, done with DESeq2, to find differences in expression le
 To illustrate this analysis synthetic data have been generated.
 
 ### Genome Wide Association Analysis (GWAS)
-<div style="text-align: right"> <a href="#introduction">top</a> </div>
+<div style="text-align: right"> <a href="#table-of-contents">top</a> </div>
 
 Genome Wide Association Studies are hypothesis free methods to identify associations between genetic regions (loci) and traits (including diseases). It has long been known that genetic variation between individuals can cause differences in phenotypes. These causal variants, and those which are tightly linked to their region of the chromosome, are therefore present at higher frequency in cases (individuals with the trait) than controls (individuals without the trait).
 
@@ -163,7 +163,7 @@ The two main protocols followed in this pipeline are: Anderson, et. al. Data qua
 The data used to illustrate this analysis is taken from the 1000 Genomes Project. We have slightly modified this dataset updating the identifiers to rsID, removing SNPs with minor allele frequency < 0.01 and prunning the number of SNPs in order to reduce the computation time.
 
 ### Proteomics
-<div style="text-align: right"> <a href="#introduction">top</a> </div>
+<div style="text-align: right"> <a href="#table-of-contents">top</a> </div>
 
 Expression Proteomics pipeline involves includes the analysis of differentially expressed proteins between conditions, such as diseased vs. healthy tissue.
 
@@ -182,7 +182,7 @@ For the differential analysis, we use DEqMS R package. DEqMS builds on top of li
 Proteomics data from postmortem brain tissue have been collected from The National Institute on Aging’s Baltimore Longitudinal Study of Aging (BLSA) (Synapse 10.7303/syn3606086).
 
 ### Meta-Analysis
-<div style="text-align: right"> <a href="#introduction">top</a> </div>
+<div style="text-align: right"> <a href="#table-of-contents">top</a> </div>
 
 Meta-analysis is the statistical procedure for synthesising data across studies. It can be performed when there are multiple studies addressing the same question and the same molecular level. This analysis is to be conducted after the individual analysis have been completed. Two different protocols are provided here, one for combining multiple GWAS results and another for transcriptomics and proteomics results.
 
@@ -207,7 +207,7 @@ The template for this meta-analysis can be found in MetaAnalysis/GWAS under MOMI
 For illustration purposes, a meta-analysis have been conducted with datat from (IGAP) and the results of the GWAS analysis performed following [section 4.C](#genome-wide-association-analysis-(gwas)).
 
 ## Integrative analysis
-<div style="text-align: right"> <a href="#introduction">top</a> </div>
+<div style="text-align: right"> <a href="#table-of-contents">top</a> </div>
 
 Integrative Analysis aims to consolidate heterogeneous data at different omics levels to understand their interrelation and combined influence on the disease processes.
 
@@ -222,7 +222,7 @@ Since the number of informative ranks is not known, RRA defines the final score 
 The template for this analysis can be found in the folder IntegrativeAnalysis under the home directory. It combines the results from the meta-analysis of microarray expression data obtained following [section 4.A GWES](#transcriptomics.-genome-wide-expression-studies-(gwes)-from-microarray), with the GWAS analysis results obtained following [section 4.C GWAS](#genome-wide-association-analysis-(gwas)). 
 
 ## Enrichment analysis
-<div style="text-align: right"> <a href="#introduction">top</a> </div>
+<div style="text-align: right"> <a href="#table-of-contents">top</a> </div>
 
 Enrichment analysis, or pathway analysis, can identify terms which are statistically over or under-represented within the list of interest, by systematically mapping genes and proteins to their associated biological annotations, such as gene ontology GO terms or pathway membership, and then comparing the distribution of the terms within a gene set of interest with the background distribution of these terms (e.g., all genes represented on a microarray chip).
 
