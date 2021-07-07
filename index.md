@@ -59,9 +59,9 @@ An alternative is to create your container from the original instructions, which
 - run `docker-compose start` to keep the service running in the background
 - ssh into the container executing the access script (`./access`) and type `nohup Rscript /tmp/install_specific_libraries.R &` to install the required R packages
 - access the tool at http://localhost:8000/jupyter and log in
-- clone MOMIC Notebooks repo from jupyter or from the terminal after ssh into the container. For the former, go to the git tab located in the left menu, click on the button ‘Clone a Repository’ and provide the repo url. For the latter, ssh into the container, cd into momic home directory and type  `git clone https://github.com/laumadmar/MOMIC_notebooks.git`
+- clone MOMIC Notebooks repo from jupyter or from the terminal after ssh into the container. For the former, go to the git tab located in the left menu, click on the button `Clone a Repositor` and provide the repo url. For the latter, ssh into the container, cd into momic home directory and type  `git clone https://github.com/laumadmar/MOMIC_notebooks.git`
 
-It is strongly recommended to inspect the [step by step guide](#installation_steps.html) to get a detailed explanation of this process, how MOMIC_server can be fully customised and access to some useful scripts and commands.
+It is strongly recommended to inspect the [step by step guide](installation_steps.html) to get a detailed explanation of this process, how MOMIC_server can be fully customised and access to some useful scripts and commands.
 
 If you run into any issues it is likely that the port 8000 is already in used in your host machine or you need to configure any parameters specified in the `docker-compose.yml` file. Follow the step by step instrucctions in this case.
 
