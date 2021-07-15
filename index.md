@@ -40,7 +40,7 @@ The data used for illustration purposes can be found at https://momic.us.es/momi
 ## Installation
 <div style="text-align: right"> <a href="#table-of-contents">top</a> </div>
 
-The only requisite to install MOMIC locally is to have Docker and docker-compose already installed. Docker is a platform used to develop, deploy, and run applications with containers. Follow the instructions on each project website ([docker](https://docs.docker.com/install) and [docker-compose](https://docs.docker.com/compose/install)).
+The only requisite to install MOMIC locally is to have Docker and docker-compose already installed. Docker is a platform used to develop, deploy, and run applications with containers. Follow the instructions on each project website ([docker](https://docs.docker.com/install) and [docker-compose](https://docs.docker.com/compose/install)). Notice you need sudo privileges or a special group for running docker commands; read more on their web site.
 
 The minimun RAM memory recommended is 56GB. It may need to be increased with large datasets, specially for some process during a RNASeq Analysis or an imputation of GWAS data. Disk space can vary depending on the size of your data; 260GB is the actual size of the data volume of momic.us.es. MOMIC has been tested on Ubuntu, CentOS, Windows and macOS servers.
 
@@ -59,7 +59,7 @@ An alternative is to create your container from the original instructions, which
 - run `docker-compose start` to keep the service running in the background
 - ssh into the container executing the access script (`./access`) and type `nohup Rscript /tmp/install_specific_libraries.R &` to install the required R packages
 - access the tool at http://localhost:8000/jupyter and log in
-- clone MOMIC Notebooks repo from jupyter or from the terminal after ssh into the container. For the former, go to the git tab located in the left menu, click on the button `Clone a Repositor` and provide the repo url. For the latter, ssh into the container, cd into momic home directory and type  `git clone https://github.com/laumadmar/MOMIC_notebooks.git`
+- clone MOMIC Notebooks repo from jupyter or from the terminal after ssh into the container. For the former, go to the git tab located in the left menu, click on the button ‘Clone a Repository’ and provide the repo url. For the latter, ssh into the container, cd into momic home directory and type  `git clone https://github.com/laumadmar/MOMIC_notebooks.git`
 
 It is strongly recommended to inspect the [step by step guide](installation_steps.html) to get a detailed explanation of this process, how MOMIC_server can be fully customised and access to some useful scripts and commands.
 
@@ -83,7 +83,7 @@ Inspect the menus to go through all Jupyter features or visit the Jupyter Projec
 ## Analysis pipelines
 <div style="text-align: right"> <a href="#table-of-contents">top</a> </div>
 
-Notebooks are provided as read-only and we refer to these as templates. As explained in the previous [section](#jupyter-general-instrucctions), create your own notebook, a duplicate or an empty one, and modify paths and/or code according to your needs. Execute code in cells with CTRL+ENTER or clicking on the Run button located at the top menu. Alternatively, CTRL+ALT to create a new empty code cell below it.
+Notebooks are provided as read-only and we refer to these as templates. As explained in the previous [section](#jupyter-general-instrucctions), create your own notebook, a duplicate or an empty one, and modify paths and/or code according to your needs. Execute code in cells with `CTRL+ENTER` or clicking on the Run button located at the top menu. Alternatively, `CTRL+ALT` to create a new empty code cell below it.
 
 Read carefully the comments on the Jupyter templates as they explain in detail the code and protocol used to perform the different steps of each analysis.
 
@@ -192,9 +192,9 @@ This one-step pipeline starts from the results of the DE analysis of various stu
 
 The MetaDE R library is used to perform this analysis. The Random Effects Model (REM) algorithm takes as input the p values, observed effect size (logFC values) and observed variance to compute summary logFCs and associated statistics. . The Variance is calculated as Standard Error (SE)^2, and SE is calculated as the difference of confidence intervals divided by 3.92. Additionally, a Fisher exact test on p-values can also be performed. The original MetaDE algorithm have been slightly modified to account for genes that are not present in all input studies.
 
-The templates for this meta-analysis can be found in the MetaAnalysis/GWES folder under MOMIC_notebooks within the home directory. This portocol has been illustrated using microarray data, but RNASeq and proteomics can be done in the same way. Note the cell that imports the core pipeline functions `(source ("/home/guess/scripts/metaDE.R")`, it is very important that you run this cell first.
+The templates for this meta-analysis can be found in the MetaAnalysis/GWES folder under MOMIC_notebooks within the home directory. This portocol has been illustrated using microarray data, but RNASeq and proteomics can be done in the same way. Note the cell that imports the core pipeline functions `source ("/home/guess/scripts/metaDE.R")`, it is very important that you run this cell first.
 
-The example notebook provided combines the two limma tables obtained from the DE analysis performed following [section 4.A GWES](#transcriptomics.-genome-wide-expression-studies-(gwes)-from-microarray). The core pipeline function used in this template, `prepare_matrix_function`, is ready to take as input limma datasets containing logFC, confidence intervals and p value. Any output from a different DE algorithm can be used as long as you prepare the datasets accordingly to run the MetaDE algorithm.
+The example notebook provided combines the two limma tables obtained from the DE analysis performed following [section 4.A GWES](#transcriptomics-genome-wide-expression-studies-gwes-from-microarray). The core pipeline function used in this template, `prepare_matrix_function`, is ready to take as input limma datasets containing logFC, confidence intervals and p value. Any output from a different DE algorithm can be used as long as you prepare the datasets accordingly to run the MetaDE algorithm.
 
 ### Meta-analysis of GWAS data
 
@@ -204,7 +204,7 @@ The analysis is peformed using METAL, which allows two analyses scehemes: SAMPLE
 
 The template for this meta-analysis can be found in MetaAnalysis/GWAS under MOMIC_notebooks within the home directory. The template is provided as read-only. As explained in [section 3](#jupyter-general-instrucctions), create your own notebook (a duplicate or an empty one) and modify paths and/or code according to your needs.
 
-For illustration purposes, a meta-analysis have been conducted with datat from (IGAP) and the results of the GWAS analysis performed following [section 4.C](#genome-wide-association-analysis-(gwas)).
+For illustration purposes, a meta-analysis have been conducted with datat from (IGAP) and the results of the GWAS analysis performed following [section 4.C](#genome-wide-association-analysis-gwas).
 
 ## Integrative analysis
 <div style="text-align: right"> <a href="#table-of-contents">top</a> </div>
@@ -219,7 +219,7 @@ For each item, the algorithm looks at how the item is positioned in the ranked l
 
 Since the number of informative ranks is not known, RRA defines the final score for the rank vector r as the minimum of P-values and orders all rank vectors according to their ρ scores. The obtained gene list is ranked according to this global score, using the Rank library from the R Basic package. The same rank is assigned to those genes with NA score.
 
-The template for this analysis can be found in the folder IntegrativeAnalysis under the home directory. It combines the results from the meta-analysis of microarray expression data obtained following [section 4.A GWES](#transcriptomics.-genome-wide-expression-studies-(gwes)-from-microarray), with the GWAS analysis results obtained following [section 4.C GWAS](#genome-wide-association-analysis-(gwas)). 
+The template for this analysis can be found in the folder IntegrativeAnalysis under the home directory. It combines the results from the meta-analysis of microarray expression data obtained following [section 4.A GWES](#transcriptomics-genome-wide-expression-studies-gwes-from-microarray), with the GWAS analysis results obtained following [section 4.C GWAS](#genome-wide-association-analysis-gwas). 
 
 ## Enrichment analysis
 <div style="text-align: right"> <a href="#table-of-contents">top</a> </div>
@@ -230,7 +230,7 @@ This one-step pipeline starts from the list of genes to explore, and ends with a
 
 The enrichment is performed using WebGestalt in R and the visualization  with GOplot package and pheatmap from R CRAN.
 
-Various templates can be found in the folder Enrichment under the home directory. In this case the enrichment is done from the results of the meta-analysis case-control completed following [section 4.E.a Meta GWES]. Read carefully the templates as these contain detailed explanation of the code implemented.
+Various templates can be found in the folder Enrichment under the home directory. In this case the enrichment is done from the results of the meta-analysis case-control completed following [section 4.E.a Meta GWES](#meta-analysis-of-gene-expression-data). Read carefully the templates as these contain detailed explanation of the code implemented.
 
 - enrichment_GOplots_template.ipynb: this template performs the enrichment for all predefined categories and prints the GO plots.
 

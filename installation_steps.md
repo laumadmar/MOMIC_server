@@ -55,7 +55,7 @@ In order to have the same permissions in the data directory on host machine and 
 - jupyterhub_config.py: The default parameters you can change if needed is: `c.JupyterHub.bind_url = 'http://8000/jupyter'` which sets the protocol, ip and base url on which the proxy will bind. By default, the JupyterLab view is loaded as indicated with the parameter: `c.Spawner.default_url = '/lab'`. Comment this line to launch the Classic Notebook. Note you can change from one to another later on.
 
 #### 2. Build the service with compose
-<div style="text-align: right"> <a href="#introduction">top</a> </div>
+<div style="text-align: right"> <a href="#step-by-step-installation">top</a> </div>
 
 Follow these steps to build and run locally the multiomics pipeline with Docker Compose. Step 5 is not needed if using the default Dockerfile. Notice you need sudo privileges or a special group for running docker commands; read more on the Docker web site. 
 
@@ -77,7 +77,7 @@ The access files contains: `docker exec -it momic_server_web_1 bash`
 
 The logs file contains: `docker logs momic_server_web_1`
 
-Change jupyter_config_web_1 by the name of your service. You can get if from `sudo docker-compose ps`.
+Change "momic_server_web_1" by the name of your service. You can get if from `sudo docker-compose ps`.
 
 ##### Notes
 
@@ -91,7 +91,7 @@ If you modify at some point the Dockerfile, you need you build the image again �
 
 Log in the first time you fire up the container can take a bit longer. It will show a message saying: “Your server is starting up. You will be redirected automatically when it's ready for you.” Refresh after a while if the home page does not come up.
 
-Note you need sudo privileges or create a special group; read more on Docker web site. Few useful docker commands:
+Few useful docker commands:
 
 - `docker-compose stop` to stop the running container
 
@@ -102,6 +102,11 @@ Note you need sudo privileges or create a special group; read more on Docker web
 - `docker logs momic_server_web _1` to print the log in console
 
 - `docker exec –it momic_server_web_1 bash` to access the running container.
+
+**Running more than one MOMIC server locally**
+
+If you need to set up more than one MOMIC instances and you are using the default Dockerfile, you will likely see an error like this `ERROR: Service 'web' failed to build: cannot mount volume over existing file, file exists /var/lib/docker/overlay2/0e2e83c65d96fb02e994608a4eb7abceb7de5368d6043ec55278f572e94129da/merged/opt/jupyterhub/jupyterhub_config.py`
+In this case, use this other image `docker pull laumadmarq/momic:built_image` which is the image originally built and not the one created with docker commit.
 
 #### 3. Get MOMIC Notebooks
 
