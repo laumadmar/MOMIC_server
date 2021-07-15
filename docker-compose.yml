@@ -7,7 +7,7 @@ services:
         #network: host # needed if running behind a proxy
     restart: unless-stopped
     ports:
-            - "8002:8000"
+            - "8000:8000"
     volumes:
       - ./../jupyterhomevolume:/home
       - ./jupyterhub_config.py:/opt/jupyterhub/jupyterhub_config.py # add this file as a volume so you can edit it without having to re-build
