@@ -10,9 +10,9 @@ It is distributed as a docker project and a collection of Jupyter notebooks. The
 
 Only requisite to install the pipeline locally is to have Docker and docker-compose already installed. Follow the instructions in the [project website](https://docs.docker.com/install/). This pipeline has been built using Docker Engine version 19.03.0 and Compose 1.25.5. Notice you need sudo privileges or a special group for running docker commands; read more on the Docker web site. 
 
-Once docker is installed, pull MOMIC image from Docker Hub: `docker pull laumadmarq/momic:latest`. You can ensure that the image is installed by using `docker images`.
+Once docker is installed, pull MOMIC image from Docker Hub: `docker pull laumadmarq/momic:base_image`. You can ensure that the image is installed by using `docker images`.
 
-Then, clone this project to a local directory using `https://github.com/laumadmar/MOMIC_server.git` and inspect the content:
+Then, clone this project to a local directory using `git clone https://github.com/laumadmar/MOMIC_server.git` and inspect the content:
 - docker-compose.yml: YAML file defining services, networks and volumes
 - Dockerfile: text file that contains the instructions to build the service
 - jupyterhub_config.py: configuration file for JupyterHub
@@ -32,14 +32,9 @@ Compose builds an image from the instrucctionse specified in the Dockerfile, and
 2. Once the server is up, press `CTRL+c` to stop the console output. This will also stop the container.
 3. From your project directory, keep the app started in the background by running `sudo docker-compose start`
 5. Enter http://localhost:8000/jupyter in a browser to see the application running. Modify this url conveniently if you have changed the port and the base url in the docker-compose.yml. Log in with user momic, pass m0m1c.
-
-An alternative is to create your container from the original instructions, instead of using momic docker image, which can be fully customised. After clonning MOMIC_server from the repository, rename the file `Dockerfile.steps` to `Dockerfile`.
-1. run `docker pull ubuntu:18.04` to download the ubuntu docker image
-2. run `docker-compose up` and once the server is up, press `CTRL+c` to stop the console output
-3. run `docker-compose start` to keep the service running in the background
-4. ssh into the container executing the access script (`./access`) and type `nohup Rscript /tmp/install_specific_libraries.R &` to install the required R packages
-5. access the tool at http://localhost:8000/jupyter and log in
 6. clone MOMIC Notebooks repo from jupyter or from the terminal after ssh into the container. For the former, go to the git tab located in the left menu, click on the button `Clone a Repository` and provide the repo url. For the latter, ssh into the container, cd into momic home directory and type  `git clone https://github.com/laumadmar/MOMIC_notebooks.git`
+
+An alternative is to create your container from the original instructions, instead of using momic docker image, which can be fully customised. After clonning MOMIC_server from the repository, rename the file `Dockerfile.steps` to `Dockerfile`. For this you need a different Dockerfile, named `Dockerfile.steps`. Rename it to `Dockerfile` and follow the instruccions above except for pulling the custom momic image, which is not needed, instead run `docker pull ubuntu:18.04`. 
 
 #### Access and log scripts
 Create a bash script to access the machine and another one to get the logs:
