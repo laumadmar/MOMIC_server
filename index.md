@@ -33,7 +33,7 @@ MOMIC is presented as a collection of Jupyter notebooks using JupyterHub with Ju
 
 The web tool can be accessed at [momic.us.es](momic.us.es). The default user is `momic`and password is `m0m1c`. Request new credentials to `lmadrid@caebi.es`. Note this alternative is intended for light analysis or quick testing. 
 
-The recomendation is to install MOMIC locally. For this purpose, it is distributed as a docker-compose project that contains the instructions needed to automatically create a fully working machine with JupyterHub, convenient extensions enabled, like git and table of content, docker volumes for data persistence, the pipeline source code and all the necessary libraries and third-party software. Having MOMIC locally built allows you to install new tools and libraries and fully customised this bioinformatics suit.
+The recomendation is to install MOMIC locally. For this purpose, it is distributed as a docker-compose project that contains the instructions needed to automatically create a JupyterHub instance, convenient extensions enabled, like git and table of content, docker volumes for data persistence, the pipeline source code and all the necessary libraries and third-party software. Having MOMIC locally built allows you to install new tools and libraries and fully customised this bioinformatics suit.
 
 The data used for illustration purposes can be found at https://momic.us.es/momic_data/, except for IGAP and BLSA. The user is `momic`and password is `m0m1c`.
 
@@ -42,26 +42,21 @@ The data used for illustration purposes can be found at https://momic.us.es/momi
 
 The only requisite to install MOMIC locally is to have Docker and docker-compose already installed. Docker is a platform used to develop, deploy, and run applications with containers. Follow the instructions on each project website ([docker](https://docs.docker.com/install) and [docker-compose](https://docs.docker.com/compose/install)). Notice you need sudo privileges or a special group for running docker commands; read more on their web site.
 
-The minimun RAM memory recommended is 56GB. It may need to be increased with large datasets, specially for some process during a RNASeq Analysis or an imputation of GWAS data. Disk space can vary depending on the size of your data; 260GB is the actual size of the data volume of momic.us.es. MOMIC has been tested on Ubuntu, CentOS, Windows and macOS servers.
+The minimun RAM memory recommended is 56GB. It may need to be increased with large datasets, specially for some processes during a RNASeq Analysis or an imputation of GWAS data. Disk space can vary depending on the size of your data; 260GB is the actual size of the data volume of momic.us.es. MOMIC has been tested on Ubuntu, CentOS, Windows and macOS servers.
 
 Follow the next steps to quickly get MOMIC up and running locally:
 
-- clone MOMIC_server in your local directory via `git clone https://github.com/laumadmar/MOMIC_server.git` and inspect the content
-- cd into that directory
-- run `docker pull laumadmarq/momic:latest` to download the docker image. You can ensure that the image is installed by using `docker images`
+- create the main directory for the project and cd into it
+- clone MOMIC_server via `git clone https://github.com/laumadmar/MOMIC_server.git`. Move into MOMIC_server folder and inspect the content
+- run `docker pull laumadmarq/momic:base_image` to download the docker image. You can ensure the image is installed by using `docker images`
 - run `docker-compose up` and once the server is up, press `CTRL+c` to stop the console output
 - run `docker-compose start` to keep the service running in the background
-- access the tool at http://localhost:8000/jupyter and log in with user momic, pass m0m1c 
+- access the tool at http://localhost:8000/jupyter and log in with the existing user momic (pass m0m1c) or create a new user 
+- clone MOMIC_notebooks repo from jupyter or from the terminal after SSH'ing into the container. For the former, go to the git tab located in the left menu, click on the button ‘Clone a Repository’ and provide the repo url. For the latter, ssh into the container, cd into the user home directory and type `git clone https://github.com/laumadmar/MOMIC_notebooks.git`.
 
-An alternative is to create your container from the original instructions, which can be fully customised. After clonning MOMIC_server from the repository, rename the file `Dockerfile.steps` to `Dockerfile`. 
-- run `docker pull ubuntu:18.04` to download the ubuntu docker image
-- run `docker-compose up` and once the server is up, press `CTRL+c` to stop the console output
-- run `docker-compose start` to keep the service running in the background
-- ssh into the container executing the access script (`./access`) and type `nohup Rscript /tmp/install_specific_libraries.R &` to install the required R packages
-- access the tool at http://localhost:8000/jupyter and log in
-- clone MOMIC Notebooks repo from jupyter or from the terminal after ssh into the container. For the former, go to the git tab located in the left menu, click on the button ‘Clone a Repository’ and provide the repo url. For the latter, ssh into the container, cd into momic home directory and type  `git clone https://github.com/laumadmar/MOMIC_notebooks.git`
+An alternative is to create your container from the original Docker instructions, which can be fully customised. For this you need a different Dockerfile, named `Dockerfile.steps`. Rename it to `Dockerfile` and follow the instruccions above except for pulling the custom momic image, which is not needed, instead run `docker pull ubuntu:18.04`. 
 
-It is strongly recommended to inspect the [step by step guide](installation_steps.html) to get a detailed explanation of this process, how MOMIC_server can be fully customised and access to some useful scripts and commands.
+It is strongly recommended to inspect the [step by step guide](installation_steps.html) to get a detailed explanation on this installation, volumes, how MOMIC server can be fully customised and access to some useful scripts and commands.
 
 If you run into any issues it is likely that the port 8000 is already in used in your host machine or you need to configure any parameters specified in the `docker-compose.yml` file. Follow the step by step instrucctions in this case.
 
