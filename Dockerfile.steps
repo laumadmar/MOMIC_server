@@ -57,11 +57,11 @@ RUN python3 -m pip install pandas
 COPY software /tmp
 
 # Installing R packages
-#RUN Rscript /tmp/restore_R_packages.R
+#RUN Rscript /tmp/restore_R_packages.R # Restore the packages from file or install them using the following RUN commands
 #RUN R -e "install.packages('BiocManager')"
 #RUN R -e "BiocManager::install(c('BiocGenerics','Biobase','affy','gcrma','limma','hgu133plus2cdf','hgu133plus2.db','hgu133a.db','AnnotationDbi','DESeq2','biomaRt','lumi','GEOquery','preprocessCore','sva','edgeR','impute','DEqMS'), update = TRUE, ask = FALSE)"
 
-#RUN R -e "install.packages(c('RSQLite','ploty','qqman','gridExtra','grid','gplots','NMF','ggplot2','knitr','WebGestaltR','pheatmap','calibrate','GOplot','RobustRankAggreg'))"
+#RUN R -e "install.packages(c('RSQLite','ploty','qqman','gridExtra','grid','gplots','NMF','ggplot2','knitr','WebGestaltR','pheatmap','calibrate','GOplot','RobustRankAggreg','remotes'))"
 #RUN R -e "library(remotes); remotes::install_github('metaOmics/MetaDE')"
 
 # Installing Java
